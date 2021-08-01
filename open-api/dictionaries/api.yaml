@@ -1,0 +1,67 @@
+openapi: 3.0.2
+info:
+  title: "API"
+  version: "1.0.0"
+  contact:
+    name: Kravchenkov Alexander
+    email: a.a.kravchenkov@gmail.com
+
+servers:
+  - url: https://wordmemo.lastsprint.dev/v1
+
+components:
+  securitySchemes:
+    BearerAuth:
+      description: Токен авторизации
+      type: http
+      scheme: bearer  
+
+
+security:
+  - AuthApiKey: []
+
+paths:
+
+  /dictionaries/{id}:
+    get:
+      summary: Используется для того, чтоб получить конкретный пользовательский словарь
+      parameters:
+        - name: id
+          in: path
+          required: true
+          schema:
+            type: string
+      responses:
+        200:
+          description: Словарь с запрошенным ID
+          content:
+            application/json:
+              schema:
+                $ref: "models.yaml#/components/schemas/Dictionary"
+        404:
+          description: У пользователя нет словаря с таким ID
+          content:
+            application/json:
+              schema:
+                $ref: "../common/errors.yaml#/components/schemas/CommonError"
+        default:
+          description: Какая-то другая ошибка скорее всего с 500-м кодом
+          content:
+            application/json:
+              schema:
+                $ref: "../common/errors.yaml#/components/schemas/CommonError"
+
+
+  /dictionaries:
+    post:
+      summary: Используется для того, чтоб добавить пользователю новый словарь
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: "models.yaml#/components/schemas/NewDictionary"
+      responses:
+        201:
+          description: В случае если словарь успешно создан
+    
+
