@@ -1,0 +1,15 @@
+name: Lint
+
+on: 
+  pull_request:
+    branches:
+      - master
+      - api_docs_*
+
+jobs:
+  build:
+    runs-on: macos-latest
+    steps:
+      - uses: actions/checkout@v1
+      - name: SurfGen lint
+        run: ./open-api/surfgen lint -c surfgen_linter_config.yaml .
