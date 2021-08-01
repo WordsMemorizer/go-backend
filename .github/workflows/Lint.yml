@@ -4,7 +4,7 @@ on:
   pull_request:
     branches:
       - master
-      - api_docs_*
+      - feature_*
 
 jobs:
   build:
