@@ -1,10 +1,14 @@
 components:
   schemas:
 
-    NewDictionary:
+    Dictionary:
       type: object
-      description: Модель для создания нового словаря
+      description: Модель словаря
       properties:
+        id:
+          type: string
+          description: Может быть null если приходит от клиента при создании словаря (когда ID неизвестен)
+          nullable: true
         language_to_learn: 
           description: > 
             Идентификатор языка, который пользователь собирается учить. 
@@ -16,19 +20,3 @@ components:
             Может быть строка ISO 639-3 либо строка в свободной форме (для каких-то кастомных кейсов изучения)
           type: string
 
-    Dictionary:
-      type: object
-      description: Модель словаря
-      properties:
-        id:
-          type: string
-        language_to_learn: 
-          description: > 
-            Идентификатор языка, который пользователь собирается учить. 
-            Может быть строка ISO 639-3 либо строка в свободной форме (для каких-то кастомных кейсов изучения)
-          type: string
-        language_in_learn:
-          description: > 
-            Идентификатор языка, НА котором пользователь собирается учить новый язык. 
-            Может быть строка ISO 639-3 либо строка в свободной форме (для каких-то кастомных кейсов изучения)
-          type: string

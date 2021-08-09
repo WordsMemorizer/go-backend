@@ -7,19 +7,17 @@ info:
     email: a.a.kravchenkov@gmail.com
 
 servers:
-  - url: https://someaddress.com
-    description: TODO заглушка, требуется поправить в будущем на реальный адрес. 
+  - url: https://wordmemo.lastsprint.dev/v1
 
 components:
   securitySchemes:
-    AuthApiKey:
-      description: Ключ авторизованного пользователя
-      type: apiKey
-      in: header
-      name: Authorization  
+    BearerAuth:
+      description: Токен авторизации
+      type: http
+      scheme: bearer  
 
 
 security:
-  - AuthApiKey: []
+  - BearerAuth: []
 
 paths:

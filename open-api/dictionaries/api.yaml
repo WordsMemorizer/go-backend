@@ -18,7 +18,7 @@ components:
 
 
 security:
-  - AuthApiKey: []
+  - BearerAuth: []
 
 paths:
 
@@ -50,7 +50,29 @@ paths:
             application/json:
               schema:
                 $ref: "../common/errors.yaml#/components/schemas/CommonError"
-
+    delete:
+      summary: Используется для удаления словаря
+      parameters:
+        - name: id
+          in: path
+          required: true
+          schema:
+            type: string
+      responses:
+        201:
+          description: Словарь успешно удален
+        404:
+          description: У пользователя нет словаря с таким ID
+          content:
+            application/json:
+              schema:
+                $ref: "../common/errors.yaml#/components/schemas/CommonError"
+        default:
+          description: Какая-то другая ошибка скорее всего с 500-м кодом
+          content:
+            application/json:
+              schema:
+                $ref: "../common/errors.yaml#/components/schemas/CommonError"
 
   /dictionaries:
     post:
@@ -59,9 +81,13 @@ paths:
         content:
           application/json:
             schema:
-              $ref: "models.yaml#/components/schemas/NewDictionary"
+              $ref: "models.yaml#/components/schemas/Dictionary"
       responses:
-        201:
+        200:
           description: В случае если словарь успешно создан
+          content:
+            application/json:
+              schema:
+                $ref: "models.yaml#/components/schemas/Dictionary"
     
 
