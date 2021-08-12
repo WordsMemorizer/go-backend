@@ -1,2 +1,66 @@
 components:
   schemas:
+
+    UserInfo:
+      type: object
+      description: Детальная информация о пользователе
+      properties:
+        id: 
+          type: string
+        authID: 
+          type: string
+          description: Может быть E-mail (для Google) или логином (для GitHub)
+        name:
+          type: string
+          description: Имя берется из сервиса которым пользователь залогинился. Его может и не быть
+          nullable: true
+        profileImageURL:
+          type: string
+          description: Картинка профиля. Может быть, а может и не быть
+          nullable: true
+          
+
+    SettingsParameterValueType:
+      description: Перечисление возможных типовы данных, которые могут храниться в настройках
+      type: string
+      enum:
+        - int
+        - bool
+        - oneOf
+
+    SettingsParameterOneOfOption:
+      description: Описывает формат параметра с типом oneOf
+      type: object
+      properties:
+        id:
+          description: Идентификатор значения
+          type: string
+        name:
+          description: Название опции для пользовательского интерфейса
+          type: string
+        isChosen:
+          description: Флаг показывает выбрал ли пользователь этот параметр
+          type: boolean
+
+    SettingsParameter:
+      type: object
+      description: Один параметр из настроек
+      properties:
+        name: 
+          description: Название параметра для пользовательского интерфейса
+          type: string
+        id:
+          description: Идентификатор параметра. Используется в коде
+        type:
+          $ref: "#/components/schemas/SettingsParameterValueType"
+        options:
+          description: Установлен только если параметр имеет тип oneOf
+          type: array
+          nullable: true
+          items:
+            $ref: "#/components/schemas/SettingsParameterOneOfOption"
+
+    Settings:
+      type: array
+      items:
+        $ref: "#/components/schemas/SettingsParameter"
