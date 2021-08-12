@@ -12,9 +12,8 @@ components:
       type: object
       description: Простая ошибка для большинства случаев
       properties:
-        code:
-          type: 
-            $ref: "#/components/schemas/ErrorCode" 
+        code: 
+          $ref: "#/components/schemas/ErrorCode" 
         developer_message:
           type: string
         user_message:
