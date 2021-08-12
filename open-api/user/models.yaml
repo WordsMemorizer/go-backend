@@ -50,6 +50,7 @@ components:
           description: Название параметра для пользовательского интерфейса
           type: string
         id:
+          type: string
           description: Идентификатор параметра. Используется в коде
         type:
           $ref: "#/components/schemas/SettingsParameterValueType"
