@@ -1,0 +1,40 @@
+components:
+  schemas:
+    PhraseType:
+      type: string
+      description: Тип фразы. Может быть одно слово или несколько. 
+      enum: [single_word, several_words]
+
+    Phrase:
+      type: object
+      description: Содержит описание фразы или слова. 
+      properties:
+        id: 
+          description: Может быть null в запросе на создание слова (ID не известен)
+          type: string
+          nullable: true
+        type:
+          $ref: "#/components/schemas/PhraseType"
+        value:
+          description: Само слово или фраза. Может быть null только для patch метода
+          type: string
+          nullable: true
+        description:
+          description: Описание значения слова или фразы. Может содержать форматированный текст
+          type: string
+          nullable: true
+        imageUrl:
+          description: Ссылка на картинку, которая прикреплена к этому слову
+          type: string
+          nullable: true
+
+    PhrasesPage:
+      type: object
+      description: Содержит список фраз и мета-информацию для пагинации на сдвигах
+      properties:
+        values: 
+          type: array
+          items:
+            $ref: "#/components/schemas/Phrase"
+        metaInfo:
+            $ref: "../../common/models.yaml#/components/schemas/OffsetPagingMetaInfo"

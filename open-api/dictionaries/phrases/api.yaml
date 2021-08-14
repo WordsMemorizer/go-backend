@@ -1,0 +1,157 @@
+openapi: 3.0.2
+info:
+  title: "API"
+  version: "1.0.0"
+  contact:
+    name: Kravchenkov Alexander
+    email: a.a.kravchenkov@gmail.com
+
+servers:
+  - url: https://wordmemo.lastsprint.dev/v1
+
+components:
+  securitySchemes:
+    AuthApiKey:
+      description: Ключ авторизованного пользователя
+      type: apiKey
+      in: header
+      name: Authorization  
+
+
+security:
+  - AuthApiKey: []
+
+paths:
+
+  /dictionaries/{dict_id}/phrases:
+    post:
+      summary: Используется для того, чтобы добавить фразу
+      parameters:
+        - $ref: "parameters.yaml#/components/parameters/DictionaryId"
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: "models.yaml#/components/schemas/Phrase"
+      responses:
+        200:
+          description: Фраза успешно добавена в словарь
+          content:
+            application/json:
+              schema:
+                $ref: "models.yaml#/components/schemas/Phrase"
+        404:
+          description: У пользователя нет словаря с таким ID
+          content:
+            application/json:
+              schema:
+                $ref: "../../common/errors.yaml#/components/schemas/CommonError"
+        default:
+          description: Какая-то другая ошибка скорее всего с 500-м кодом
+          content:
+            application/json:
+              schema:
+                $ref: "../../common/errors.yaml#/components/schemas/CommonError"
+
+    get:
+      summary: Возвращает пагинируемый список всех фраз в словаре
+      parameters:
+        - $ref: "parameters.yaml#/components/parameters/DictionaryId"
+        - $ref: "../../common/parameters.yaml#/components/parameters/Limit"
+        - $ref: "../../common/parameters.yaml#/components/parameters/Offset"
+      responses:
+        200:
+          description: Очередная пачка данных успешно найдена. В случае если в ответе пустой массив, значит пагинация закончилась
+          content:
+            application/json:
+              schema:
+                $ref: "models.yaml#/components/schemas/PhrasesPage"
+        404:
+          description: У пользователя нет словаря с таким ID
+          content:
+            application/json:
+              schema:
+                $ref: "../../common/errors.yaml#/components/schemas/CommonError"
+        default:
+          description: Какая-то другая ошибка скорее всего с 500-м кодом
+          content:
+            application/json:
+              schema:
+                $ref: "../../common/errors.yaml#/components/schemas/CommonError"
+
+  /dictionaries/{dict_id}/phrases/{phrase_id}:
+    get:
+      summary: Возвращает конкретную фразу
+      parameters:
+        - $ref: "parameters.yaml#/components/parameters/DictionaryId"
+        - $ref: "parameters.yaml#/components/parameters/PhraseId"
+      responses:
+        200:
+          description: Фраза найдена
+          content:
+            application/json:
+              schema:
+                $ref: "models.yaml#/components/schemas/Phrase"
+        404:
+          description: У пользователя нет словаря с таким ID или нет фразы с таким ID
+          content:
+            application/json:
+              schema:
+                $ref: "../../common/errors.yaml#/components/schemas/CommonError"
+        default:
+          description: Какая-то другая ошибка скорее всего с 500-м кодом
+          content:
+            application/json:
+              schema:
+                $ref: "../../common/errors.yaml#/components/schemas/CommonError"
+
+    patch:
+      summary: Обновляет конкретную фразу
+      parameters:
+        - $ref: "parameters.yaml#/components/parameters/DictionaryId"
+        - $ref: "parameters.yaml#/components/parameters/PhraseId"
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: "models.yaml#/components/schemas/Phrase"
+      responses:
+        200:
+          description: Та же самая фраза после обновления
+          content:
+            application/json:
+              schema:
+                $ref: "models.yaml#/components/schemas/Phrase"
+        404:
+          description: У пользователя нет словаря с таким ID или нет фразы с таким ID
+          content:
+            application/json:
+              schema:
+                $ref: "../../common/errors.yaml#/components/schemas/CommonError"
+        default:
+          description: Какая-то другая ошибка скорее всего с 500-м кодом
+          content:
+            application/json:
+              schema:
+                $ref: "../../common/errors.yaml#/components/schemas/CommonError"
+
+    delete:
+      summary: Удаляет конкретную фразу
+      parameters:
+        - $ref: "parameters.yaml#/components/parameters/DictionaryId"
+        - $ref: "parameters.yaml#/components/parameters/PhraseId"
+      responses:
+        201:
+          description: Удаление прошлоу спешно
+        404:
+          description: У пользователя нет словаря с таким ID или нет фразы с таким ID
+          content:
+            application/json:
+              schema:
+                $ref: "../../common/errors.yaml#/components/schemas/CommonError"
+        default:
+          description: Какая-то другая ошибка скорее всего с 500-м кодом
+          content:
+            application/json:
+              schema:
+                $ref: "../../common/errors.yaml#/components/schemas/CommonError"

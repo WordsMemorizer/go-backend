@@ -1,0 +1,11 @@
+components:
+  schemas:
+
+    OffsetPagingMetaInfo:
+      type: object
+      description: Содержит мета-информацию необходимую для пагинации на сдвигах
+      properties:
+        totalCount:
+          type: integer
+          description: Сколько всего элементов существует
+        

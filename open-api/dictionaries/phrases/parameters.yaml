@@ -1,0 +1,18 @@
+components:
+  parameters:
+
+    DictionaryId:
+      name: dict_id
+      in: path
+      required: true
+      schema:
+        type: string
+    
+    PhraseId:
+      name: phrase_id
+      in: path
+      required: true
+      schema:
+        type: string
+
+    
