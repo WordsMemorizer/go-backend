@@ -7,8 +7,7 @@ info:
     email: a.a.kravchenkov@gmail.com
 
 servers:
-  - url: https://someaddress.com
-    description: TODO заглушка, требуется поправить в будущем на реальный адрес. 
+  - url: https://wordmemo.lastsprint.dev/v1
 
 components:
   securitySchemes:
@@ -23,3 +22,67 @@ security:
   - AuthApiKey: []
 
 paths:
+
+  /user:
+
+    delete:
+      summary: Удаляет пользователя вместе со всеми его словарями и всем остальным. 
+      responses:
+        201:
+          description: Пользователь удален
+        default:
+          description: Какая-то другая ошибка скорее всего с 500-м кодом
+          content:
+            application/json:
+              schema:
+                $ref: "../common/errors.yaml#/components/schemas/CommonError"
+
+  /user/info:
+    get:
+      summary: Получает информацию о пользователе
+      responses:
+        200:
+          description: Информация о пользвоателе
+          content:
+            application/json:
+              schema:
+                $ref: "models.yaml#/components/schemas/UserInfo"
+        default:
+          description: Какая-то другая ошибка скорее всего с 500-м кодом
+          content:
+            application/json:
+              schema:
+                $ref: "../common/errors.yaml#/components/schemas/CommonError"
+
+  /user/settings:
+    get:
+      summary: Возвращает значения текущих настроек
+      responses:
+        200:
+          description: Список параметров и значения параметров
+          content:
+            application/json:
+              schema:
+                $ref: "models.yaml#/components/schemas/Settings"
+        default:
+          description: Какая-то другая ошибка скорее всего с 500-м кодом
+          content:
+            application/json:
+              schema:
+                $ref: "../common/errors.yaml#/components/schemas/CommonError"
+    patch:
+      summary: Изменяет только те настройки, ключи и значения для которых были переданы.
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: "models.yaml#/components/schemas/Settings"
+      responses:
+        201:
+          description: Список параметров и значения параметров
+        default:
+          description: Какая-то другая ошибка скорее всего с 500-м кодом
+          content:
+            application/json:
+              schema:
+                $ref: "../common/errors.yaml#/components/schemas/CommonError"

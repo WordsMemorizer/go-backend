@@ -37,5 +37,4 @@ components:
           items:
             $ref: "#/components/schemas/Phrase"
         metaInfo:
-          type:
             $ref: "../../common/models.yaml#/components/schemas/OffsetPagingMetaInfo"
