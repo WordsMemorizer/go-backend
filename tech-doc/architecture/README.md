@@ -8,4 +8,4 @@ PostgerSQL для хранения всех данных
 
 SFTP сервер будет использоваться как сторедж для бинарных данных
 
-![](mvp_backend_arch.png)
+![](./mvp-backend-arch.png)
