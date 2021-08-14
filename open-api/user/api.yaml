@@ -63,7 +63,7 @@ paths:
           content:
             application/json:
               schema:
-                $ref: "models.yaml#/components/schemas/UserInfo"
+                $ref: "models.yaml#/components/schemas/Settings"
         default:
           description: Какая-то другая ошибка скорее всего с 500-м кодом
           content:
@@ -72,6 +72,11 @@ paths:
                 $ref: "../common/errors.yaml#/components/schemas/CommonError"
     patch:
       summary: Изменяет только те настройки, ключи и значения для которых были переданы.
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: "models.yaml#/components/schemas/Settings"
       responses:
         201:
           description: Список параметров и значения параметров
