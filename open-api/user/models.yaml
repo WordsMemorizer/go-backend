@@ -21,7 +21,7 @@ components:
           
 
     SettingsParameterValueType:
-      description: Перечисление возможных типовы данных, которые могут храниться в настройках
+      description: Перечисление возможных типов данных, которые могут храниться в настройках
       type: string
       enum:
         - int
