@@ -2,6 +2,7 @@ package middlewares
 
 import (
 	"fmt"
+	"github.com/WordsMemorizer/go-backend/common/router"
 	"log"
 	"net/http"
 )
@@ -28,7 +29,7 @@ func (s *stdoutLoggerWriterProxy) isError() bool { return s.code >= 400 }
 
 // StdoutLoggerMiddleware is http.HandleFunc level proxy
 // it will print information about request and error (if response code is error code)
-var StdoutLoggerMiddleware = func(next http.HandlerFunc) http.HandlerFunc {
+var StdoutLoggerMiddleware = func(next router.HttpHandlerFunc) router.HttpHandlerFunc {
 	return func(w http.ResponseWriter, r *http.Request) {
 		proxy := &stdoutLoggerWriterProxy{w, 0, nil}
 

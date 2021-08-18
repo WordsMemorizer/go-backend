@@ -14,7 +14,7 @@ import (
 // if error isn't errors.HttpError then it will create errors.HttpError from this errors
 //
 // if error is nil then it will marshall response to json and send it
-var JsonMapperMiddleware = func(next router.HandlerFunc) http.HandlerFunc {
+var JsonMapperMiddleware = func(next router.HandlerFunc) router.HttpHandlerFunc {
 	return func(writer http.ResponseWriter, request *http.Request) {
 		value, err := next(writer, request)
 

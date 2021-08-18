@@ -12,6 +12,9 @@ import (
 // What the code will do with response is defined in Mapper
 type HandlerFunc func(w http.ResponseWriter, r *http.Request) (interface{}, error)
 
+// HttpHandlerFunc is just an alias on http.HandlerFunc
+type HttpHandlerFunc http.HandlerFunc
+
 // Wrap wraps handler by middleware
 //
 // You can use it like that
@@ -48,26 +51,35 @@ func (h HandlerFunc) Wrap(middleware func(next HandlerFunc) HandlerFunc) Handler
 	return middleware(h)
 }
 
-// Mapper maps internal type HandlerFunc to http.HandlerFunc
+// Map maps internal type HandlerFunc to http.HandlerFunc
 // the idea is to map result type from business method (interface{}, error) to http.ResponseWriter
 //
 // You can use whatever mapper you need
 // For example ypu can map response in JSON or in FormUrl or in XML
-func (h HandlerFunc) Mapper(mapper func(next HandlerFunc) http.HandlerFunc) http.HandlerFunc {
+// For example ypu can map response in JSON or in FormUrl or in XML
+func (h HandlerFunc) Map(mapper func(next HandlerFunc) HttpHandlerFunc) HttpHandlerFunc {
 	return mapper(h)
+}
+
+// Proxy works just like Wrap but for other type of function
+func (h HttpHandlerFunc) Proxy(middleware func(next HttpHandlerFunc) HttpHandlerFunc) HttpHandlerFunc {
+	return middleware(h)
+}
+
+// RegisterIn will add method to router
+func (h HttpHandlerFunc) RegisterIn(router Router, method, pattern string) HttpHandlerFunc {
+	router.Method(method, pattern, http.HandlerFunc(h))
+	return h
 }
 
 // Router is simple interface for a http request router
 type Router interface {
 	http.Handler
-	Delete(pattern string, h http.HandlerFunc)
-	Get(pattern string, h http.HandlerFunc)
-	Patch(pattern string, h http.HandlerFunc)
-	Post(pattern string, h http.HandlerFunc)
-	Put(pattern string, h http.HandlerFunc)
-
 	// Method could be used for whatever http method you need
 	Method(method, pattern string, h http.HandlerFunc)
+
+	// CreateMethod does nothing. Just returns function. Use it to avoid direct casting and build pipeline
+	CreateMethod(method HandlerFunc) HandlerFunc
 }
 
 // ChiRouterWrapper implementation of Router based on `chi` package
