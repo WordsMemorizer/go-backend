@@ -16,8 +16,8 @@ components:
       properties:
         code: 
           $ref: "#/components/schemas/ErrorCode" 
-        developer_message:
+        developerMessage:
           type: string
-        user_message:
+        userMessage:
           type: string
         

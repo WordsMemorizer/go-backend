@@ -3,7 +3,7 @@ components:
     PhraseType:
       type: string
       description: Тип фразы. Может быть одно слово или несколько. 
-      enum: [single_word, several_words]
+      enum: [singleWord, severalWords]
 
     Phrase:
       type: object

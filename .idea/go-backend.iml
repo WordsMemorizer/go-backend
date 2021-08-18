@@ -6,6 +6,7 @@
       <excludeFolder url="file://$MODULE_DIR$/open-api" />
       <excludeFolder url="file://$MODULE_DIR$/.github" />
       <excludeFolder url="file://$MODULE_DIR$/tech-doc" />
+      <excludeFolder url="file://$MODULE_DIR$/surfgen" />
     </content>
     <orderEntry type="inheritedJdk" />
     <orderEntry type="sourceFolder" forTests="false" />
